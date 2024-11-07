@@ -1,4 +1,5 @@
 //Use query Selectors to get the class of all the button shapes
+const colors = ["red", "blue", "green", "yellow", "purple"];
 const redLight = document.querySelector('.red-light');
 const greenLight = document.querySelector('.green-light');
 const yellowLight = document.querySelector('.yellow-light');
@@ -12,6 +13,8 @@ const yellowSwitch = document.getElementById("yellow-switch");
 const onSwitch = document.getElementById("on-switch");
 const offSwitch = document.getElementById("off-switch");
 const partySwitch = document.getElementById("party-switch");
+const cycleSwitch = document.getElementById("cycle-switch");
+
 //Add event listeners that listen for a button click
 redSwitch.addEventListener("click", () => {
     redLight.style.backgroundColor = "red";
@@ -25,9 +28,9 @@ yellowSwitch.addEventListener("click", () => {
 
 //Turn all lights on and off with their specific buttons
 offSwitch.addEventListener("click", () => {
-    redLight.style.backgroundColor = "grey";
-    greenLight.style.backgroundColor = "grey";
-    yellowLight.style.backgroundColor = "grey";
+    redLight.style.backgroundColor = "#444";
+    greenLight.style.backgroundColor = "#444";
+    yellowLight.style.backgroundColor = "#444";
 });
 onSwitch.addEventListener("click", () => {
     redLight.style.backgroundColor = "red";
@@ -36,5 +39,34 @@ onSwitch.addEventListener("click", () => {
 });
 
 //Party Mode Button
+partySwitch.addEventListener("click", () => {
+    redLight.style.backgroundColor = "purple";
+    greenLight.style.backgroundColor = "teal";
+    yellowLight.style.backgroundColor = "hotpink";
+});
 
 //Turn all lights on and off at once with a single button
+let currentLight = 'red'; //init current light state
+let intervalId = null;
+
+function cycleLight(){
+    redLight.style.backgroundColor = "#444";
+    yellowLight.style.backgroundColor = "#444";
+    greenLight.style.backgroundColor = "#444";
+    if(currentLight === 'red'){
+        redLight.style.backgroundColor = "red";
+        currentLight = 'yellow';
+    } else if(currentLight === 'yellow'){
+        yellowLight.style.backgroundColor = "yellow";
+        currentLight = 'green';
+    } else{
+        greenLight.style.backgroundColor = "green";
+        currentLight = 'red';
+    }
+}
+
+cycleSwitch.addEventListener('click', () => {
+    if(!intervalId){
+        intervalId = setInterval(cycleLight, 200);
+    }
+});
